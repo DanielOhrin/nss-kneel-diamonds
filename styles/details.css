@@ -14,3 +14,10 @@
     flex-flow: row nowrap;
     width: 50%;
 }
+
+#jewelryTypes {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-left: 2rem;
+}
+

@@ -5,7 +5,7 @@
     modules to get copies of the state.
 
 */
-const database = {
+export const database = {
     styles: [
         { id: 1, style: "Classic", price: 500 },
         { id: 2, style: "Modern", price: 710 },
@@ -25,63 +25,29 @@ const database = {
         { id: 4, metal: "Platinum", price: 795.45 },
         { id: 5, metal: "Palladium", price: 1241.0 }
     ],
+    types: [
+        {
+            id: 1,
+            name: `Ring`
+        },
+        {
+            id: 2,
+            name: `Earring`
+        },
+        {
+            id: 3,
+            name: `Necklace`
+        }
+    ],
     customOrders: [
         {
             id: 1,
             metalId: 3,
             sizeId: 2,
             styleId: 3,
+            typeId: 1,
             timestamp: 1614659931693
         }
     ],
     orderBuilder: {} //State Object
-}
-
-export const getMetals = () => {
-    return database.metals.map(metal => ({ ...metal }))
-}
-
-export const getSizes = () => {
-    return database.sizes.map(size => ({ ...size }))
-}
-
-export const getStyles = () => {
-    return database.styles.map(style => ({ ...style }))
-}
-
-export const getOrders = () => {
-    return database.customOrders.map(order => ({ ...order }))
-}
-
-export const setMetal = (id) => {
-    database.orderBuilder.metalId = id
-}
-
-export const setSize = (id) => {
-    database.orderBuilder.sizeId = id
-}
-
-export const setStyle = (id) => {
-    database.orderBuilder.styleId = id
-}
-
-export const addCustomOrder = () => {
-    //Copy of current user's choices
-    const newOrder = { ...database.orderBuilder }
-
-    //Creates a unique ID for every order
-    const lastIndex = database.customOrders.length - 1
-    newOrder.id = database.customOrders[lastIndex].id + 1
-
-    // Creates a timestamp at the time of ordering
-    newOrder.timestamp = Date.now()
-
-    //Pushes the new order into the database
-    database.customOrders.push(newOrder)
-
-    //Resets the temporary local state object
-    database.orderBuilder = {}
-
-    //Broadcasts a notification that permanent state has been changed.
-    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
